@@ -1,0 +1,11 @@
+{
+  "name": "kauneonga",
+  "displayName": "Kauneonga",
+  "version": "1.0.0",
+  "description": "Securely connect Claude to your Kauneonga customer account to review messages, manage permitted on-call schedules, and use other authorized answering-service workflows.",
+  "author": {
+    "name": "Kauneonga LLC",
+    "email": "development@kauneonga.com"
+  },
+  "homepage": "https://www.kauneonga.com/"
+}
