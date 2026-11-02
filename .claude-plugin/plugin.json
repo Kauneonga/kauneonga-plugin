@@ -1,11 +1,18 @@
 {
   "name": "kauneonga",
-  "displayName": "Kauneonga",
   "version": "1.0.0",
-  "description": "Securely connect Claude to your Kauneonga customer account to review messages, manage permitted on-call schedules, and use other authorized answering-service workflows.",
+  "description": "Securely connect Claude to your Kauneonga customer account to review messages, manage follow-up to-dos, and update authorized on-call calendars and escalation levels.",
   "author": {
     "name": "Kauneonga LLC",
-    "email": "development@kauneonga.com"
+    "url": "https://www.kauneonga.com"
   },
-  "homepage": "https://www.kauneonga.com/"
+  "homepage": "https://www.kauneonga.com/",
+  "license": "MIT",
+  "keywords": [
+    "answering-service",
+    "messages",
+    "on-call",
+    "scheduling",
+    "mcp"
+  ]
 }
