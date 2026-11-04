@@ -1,42 +1,102 @@
-# Kauneonga
+# Kauneonga for Claude
 
-Work with your answering service from Claude.
+For clients of answering services that run on Kauneonga. Connect Claude to your
+account with your own client portal login, then ask about your messages, To Dos
+and who's on call, and make the changes your login allows.
 
-This plugin connects Claude to the client connector your answering service runs on
-Kauneonga, and adds skills for the everyday work clients do: reading and acting on the
-messages the service took, keeping the on-call schedule right, and keeping on-call
-people reachable.
+## What you can do
+
+- **Catch up on messages.** See what needs action first, add or delete a note,
+  mark a message read or unread, acknowledge it, change its status, or add a
+  new message.
+- **Follow up.** Set up a To Do (a call, text or email, now or on a schedule),
+  or delete one.
+- **Check and change who's on call.** See who's on call tonight and who backs
+  them up. If your login has **Oncall Calendar Management** access, cover time
+  off, swap or move shifts, change escalation levels, and update your on-call
+  contacts and how each one is reached.
+
+Try asking: "What came in overnight that needs action?", "Who's on call
+tonight?" or "Move Saturday's shift from Dr. Lee to Dr. Patel."
+
+Before any change, Claude tells you exactly what it will do and asks you to
+confirm.
+
+## What it won't do
+
+- It never asks for card or bank details, and it has no billing or payment
+  tools.
+- It works only with the accounts your client portal login can see.
+- Phone lines, scripts and AI answering settings stay with your answering
+  service. If you ask for one of these, it tells you and suggests contacting
+  them.
 
 ## Install
 
-Install from the Claude Directory after publication. For a local development test, clone this repository and run `claude --plugin-dir .`.
+### Claude
 
-On first use you sign in at your answering service's client portal. Enter the web address
-you use to sign in and sign in with your own login. Your password is never seen by Claude
-or by the connector. You see and change only what your login can in the client portal: the
-accounts and lines you belong to, and the calendar of lines where you have Calendar
-Management access.
+**Your whole team (Claude Team or Enterprise):** an owner of your Claude
+organization opens **Organization settings > Plugins & skills** and adds this
+repository, `Kauneonga/kauneonga-plugin`.
 
-## Customer capabilities
+**Claude Code:**
 
-The customer connector supports authorized message review and updates,
-follow-up to-dos, and on-call calendar and escalation-level management.
-Access depends on the signed-in user's active memberships, granted OAuth
-scopes, and Calendar Management permission for the affected phone.
-Before changes that send calls, SMS or email or change coverage, ask for
-confirmation and verify the tool result.
+```
+/plugin install kauneonga --marketplace Kauneonga/kauneonga-plugin
+```
 
-Kauneonga does not expose billing, card collection, or payment tools through
-this plugin. Those features are specific to Answering Service Care.
+On Claude Code older than 2.1.275, add the marketplace first:
+
+```
+/plugin marketplace add Kauneonga/kauneonga-plugin
+/plugin install kauneonga@kauneonga
+```
+
+**Just the connector:** in Claude, open **Settings > Connectors** and add a
+custom connector with this address:
+`https://mcp.kauneonga.com/api/v2/mcp`.
+
+### Other AI apps
+
+Any AI app that supports MCP connectors, including ChatGPT, can use the same
+connector address: `https://mcp.kauneonga.com/api/v2/mcp`.
+
+### Sign in
+
+The first time Claude uses the connector, it opens a sign-in page. Enter the
+web address you use to sign in to your client portal, then sign in with your
+own login, enter your two-factor code if you use one, and allow access. Your
+password is never seen by Claude or by the connector.
+
+## Your data and permissions
+
+- Each person connects with their own login, and gets the same access they
+  have in the client portal: the accounts and lines they belong to, and the
+  on-call calendar of lines where they have Oncall Calendar Management access.
+  Approving a change in the app never gives your login more access.
+- You can disconnect at any time from your AI app's connector settings.
+- See Kauneonga's [privacy policy](https://www.kauneonga.com/privacy-policy/)
+  and [terms](https://www.kauneonga.com/terms-and-conditions/).
 
 ## Skills
 
 | Skill | What it does |
 |---|---|
 | `kauneonga` | Picks the right skill for a request, and the order when a job needs several |
-| `message-triage` | Separate the messages that need action now from the ones that can wait, and record what you did |
-| `oncall-changes` | Cover time off, swap or move shifts, and answer who's on call |
-| `contact-delivery` | Update how on-call people are reached: numbers, texts, email |
+| `message-triage` | Separates the messages that need action now from the ones that can wait, and records what you did |
+| `oncall-changes` | Covers time off, swaps or moves shifts, and answers who's on call |
+| `contact-delivery` | Updates how on-call people are reached: numbers, texts, email |
 
-The skills only guide the order of the work. Every rule is enforced by the connector, which
-also works without this plugin in ChatGPT and other AI apps that support MCP.
+The skills only guide the order of the work. Every rule is enforced by the
+connector, which also works without this plugin.
+
+## Help
+
+Contact your answering service.
+
+---
+
+Maintaining this plugin? Run `claude plugin validate --strict .` and
+`claude plugin validate --strict .claude-plugin/plugin.json` before
+committing, and keep the version the same in `.claude-plugin/plugin.json` and
+`.claude-plugin/marketplace.json`. Licensed under the [MIT License](LICENSE).

@@ -14,7 +14,8 @@ filtering by account when they name one. `search_messages` finds a specific call
 subject across the retained window.
 
 Read before summarizing. Messages carry caller PII and, for medical practices, clinical
-detail — keep both inside the summary you produce and do not restate more than the user needs.
+detail. Minimize disclosure: report only what the user needs, and do not include
+sensitive details in unnecessary tool calls or external messages.
 
 ## Sort
 
@@ -43,8 +44,8 @@ messages that should have paged someone but did not.
 
 Use `create_message_note` to record work done. A customer with the appropriate
 account access can use `create_to_do` or `delete_to_do` for follow-ups. Before
-creating a task, verify its account, phone, schedule and recipients, and check
-for existing tasks. A task can send real voice calls, email or SMS, so explain
+creating or deleting a task, verify its account, phone, schedule and recipients,
+and check for existing tasks. A task can send real voice calls, email or SMS, so explain
 that effect and obtain explicit confirmation.
 
 When authorized, use `create_message`, `update_message`,
