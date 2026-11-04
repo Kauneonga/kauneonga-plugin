@@ -56,10 +56,23 @@ On Claude Code older than 2.1.275, add the marketplace first:
 custom connector with this address:
 `https://mcp.kauneonga.com/api/v2/mcp`.
 
-### Other AI apps
+### ChatGPT
 
-Any AI app that supports MCP connectors, including ChatGPT, can use the same
-connector address: `https://mcp.kauneonga.com/api/v2/mcp`.
+Add a custom connector in ChatGPT with the address
+`https://mcp.kauneonga.com/api/v2/mcp`. The skills come with the plugin once it
+is listed in ChatGPT.
+
+### Codex, Cursor and other agents
+
+Install the skills:
+
+```bash
+npx skills add Kauneonga/kauneonga-plugin
+```
+
+Then add the connector address, `https://mcp.kauneonga.com/api/v2/mcp`, in the
+agent's MCP settings. It's a Streamable HTTP server that signs you in with
+OAuth.
 
 ### Sign in
 
@@ -83,6 +96,7 @@ password is never seen by Claude or by the connector.
 | Skill | What it does |
 |---|---|
 | `kauneonga` | Picks the right skill for a request, and the order when a job needs several |
+| `setup` | Connects your account and checks what your login can reach |
 | `message-triage` | Separates the messages that need action now from the ones that can wait, and records what you did |
 | `oncall-changes` | Covers time off, swaps or moves shifts, and answers who's on call |
 | `contact-delivery` | Updates how on-call people are reached: numbers, texts, email |
@@ -96,7 +110,5 @@ Contact your answering service.
 
 ---
 
-Maintaining this plugin? Run `claude plugin validate --strict .` and
-`claude plugin validate --strict .claude-plugin/plugin.json` before
-committing, and keep the version the same in `.claude-plugin/plugin.json` and
-`.claude-plugin/marketplace.json`. Licensed under the [MIT License](LICENSE).
+Maintaining this plugin? See [docs/MAINTAINING.md](docs/MAINTAINING.md).
+Licensed under the [MIT License](LICENSE).

@@ -11,6 +11,7 @@ can in the client portal, with or without a skill.
 
 | The request | Skill |
 |---|---|
+| Connect the account, or check what this login can reach | `setup` |
 | Catch up on messages, find anything urgent, work through unread ones | `message-triage` |
 | Create and track follow-up to-dos or update message status | `message-triage` |
 | Cover time off, swap or move a shift, who's on call tonight | `oncall-changes` |
