@@ -35,7 +35,7 @@ Always in this order:
 | Request | How |
 |---|---|
 | Cover time off | Add a shift for the person covering with `create_calendar_event`. To take one occurrence out of a repeating series, detach that occurrence first, then change the detached copy |
-| Swap two shifts | Two changes. Confirm both before making either, so a swap never ends half done |
+| Swap two shifts | Confirm both changes before making either. If only one succeeds, tell the user immediately and do not imply the swap is complete |
 | Change a repeating shift | `update_calendar_event`, for one occurrence or the whole series. Ask which; never assume the series |
 | Copy a week | `copy_calendar_event` |
 | Remove shifts | `delete_calendar_event` for one, `delete_calendar_events` for several. Read back exactly what will go |

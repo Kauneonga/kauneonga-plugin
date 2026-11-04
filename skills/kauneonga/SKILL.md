@@ -27,3 +27,10 @@ and link it in the answer.
 
 When a task needs something the connector doesn't offer, say so and point the user to the
 client portal rather than trying a workaround.
+
+## Access
+
+Use only accounts, phones and records the connector returns for the signed-in login.
+The connector enforces account memberships and line permissions; a skill never grants
+access. Never pick another account or identity to get around a refusal. Changes to phone
+lines, scripts or AI answering settings go to the user's answering service.

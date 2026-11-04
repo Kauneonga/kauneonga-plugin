@@ -1,12 +1,13 @@
 {
   "name": "kauneonga",
   "version": "1.0.0",
-  "description": "Securely connect Claude to your Kauneonga customer account to review messages, manage follow-up to-dos, and update authorized on-call calendars and escalation levels.",
+  "description": "Work with your answering service from Claude: check your messages, set up follow-up To Dos, and update who's on call and how they're reached, with your own client portal login.",
   "author": {
     "name": "Kauneonga LLC",
     "url": "https://www.kauneonga.com"
   },
   "homepage": "https://www.kauneonga.com/",
+  "repository": "https://github.com/Kauneonga/kauneonga-plugin",
   "license": "MIT",
   "keywords": [
     "answering-service",
