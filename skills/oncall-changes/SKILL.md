@@ -40,7 +40,7 @@ Always in this order:
 | Copy a week | `copy_calendar_event` |
 | Remove shifts | `delete_calendar_event` for one, `delete_calendar_events` for several. Read back exactly what will go |
 | Add a person | `create_calendar_contact`, at least one way to reach them (see `contact-delivery`), then give them shifts |
-| Edit escalation levels | Check `list_escalation_levels`, confirm the plan, then use `create_escalation_level`, `update_escalation_level` or `delete_escalation_level` where authorized. Read back the level order |
+| Add or edit escalation levels | Check `list_escalation_levels`, confirm the plan, then use `create_escalation_level` or `update_escalation_level` where authorized. Read back the level order. Clients can't delete a level: if they want one removed, say their answering service can remove it |
 
 ## "The wrong person got called"
 
