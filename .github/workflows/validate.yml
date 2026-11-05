@@ -1,0 +1,13 @@
+name: Validate client plugin package
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check package structure and safety invariants
+        run: python3 tests/test_package.py

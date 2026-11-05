@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "kauneonga": {
+      "type": "streamable-http",
+      "url": "https://mcp.kauneonga.com/api/v2/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth"
+          }
+        }
+      }
+    }
+  }
+}
