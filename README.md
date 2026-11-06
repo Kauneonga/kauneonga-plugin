@@ -110,5 +110,6 @@ Contact your answering service.
 
 ---
 
-Maintaining this plugin? See [docs/MAINTAINING.md](docs/MAINTAINING.md).
+Maintaining this plugin? See [docs/MAINTAINING.md](docs/MAINTAINING.md). AI coding
+agents: see [AGENTS.md](AGENTS.md).
 Licensed under the [MIT License](LICENSE).

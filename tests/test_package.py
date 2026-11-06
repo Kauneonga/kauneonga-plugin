@@ -40,7 +40,7 @@ def names_something_internal(text):
             if hashlib.sha256(phrase).hexdigest() in FORBIDDEN_SHA256:
                 return True
     return False
-PUBLIC_FILES = ["README.md", "plugin.json", ".claude-plugin/plugin.json", ".claude-plugin/marketplace.json"]
+PUBLIC_FILES = ["README.md", "AGENTS.md", "plugin.json", ".claude-plugin/plugin.json", ".claude-plugin/marketplace.json"]
 
 
 def read_json(path):
