@@ -49,6 +49,8 @@ Use **your own Client Portal login**. Each person can only see and change what t
 
 ### Claude: install the full plugin
 
+**Plan requirement:** Claude plugins are available on paid Claude plans (Pro, Max, Ultra, Team, or Enterprise). If you use Claude Free, you may not see the Plugins menu.
+
 1. Open [Claude](https://claude.ai) and sign in to an account with plugin access.
 2. Open **Customize > Plugins**.
 3. Choose **Add > Add marketplace > Add from a repository** and paste:
