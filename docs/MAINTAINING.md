@@ -24,7 +24,7 @@ One package serves Claude, ChatGPT and other agents, using the client connector:
   update every skill that mentions it.
 - The connector enforces access. Skills confirm changes, call out cost, live-call and
   can't-be-undone effects, and never work around a refusal.
-- Public material never names internal systems, vendors or staff-only roles.
+- Public-facing material never names internal systems, vendors or restricted internal roles.
 - Keep the version the same in `.claude-plugin/plugin.json`,
   `.claude-plugin/marketplace.json` and `plugin.json`, and the connector the same in
   `.mcp.json` and `mcp.json`.
