@@ -19,8 +19,7 @@ and who's on call, and make the changes your login allows.
 Try asking: "What came in overnight that needs action?", "Who's on call
 tonight?" or "Move Saturday's shift from Dr. Lee to Dr. Patel."
 
-Before any change, your AI assistant should tell you what it proposes and ask you to
-confirm. Review changes before approving them.
+When using the full guided plugin, review the proposed action and confirm it before changes are made. **A standalone MCP connection may not provide this protection**; see the MCP-only safety warning below.
 
 ## What it won't do
 
@@ -33,7 +32,7 @@ confirm. Review changes before approving them.
 
 ## Choose your AI assistant
 
-You can use your Client Portal account with several AI assistants. **Claude installs the complete guided plugin.** ChatGPT, Gemini, and other assistants can connect to the same MCP server where supported, but **the MCP connection alone does not automatically install the plugin's guided skills**.
+You can use your Client Portal account with supported AI assistants. **Claude can install the complete guided plugin.** Other compatible apps may connect through MCP, but **MCP alone does not install guided skills or guarantee action confirmations**. For production access, the connector must be approved by your organization, and MCP-only clients must restrict tools to read-only until tested safety controls are in place.
 
 | AI assistant | Setup | Availability |
 | --- | --- | --- |
@@ -46,6 +45,8 @@ You can use your Client Portal account with several AI assistants. **Claude inst
 **MCP connection URL:** `https://mcp.kauneonga.com/api/v2/mcp`
 
 Use **your own Client Portal login**. Each person can only see and change what that login is permitted to access. Billing and payments are **not** available through the Kauneonga client connector.
+
+**Safety for MCP-only connections:** The guided plugin includes instructions to confirm consequential actions and verify results. A direct MCP connection **does not inherit those instructions**. Until the connecting AI application is configured and tested to require explicit confirmation before calls, SMS, email, on-call changes, task creation/deletion, or other writes, **make only read-only tools available**. If your client cannot enforce a read-only tool allowlist, do **not** connect it to the production customer server; use the full approved plugin or Client Portal instead. The account's role-based permissions still apply, but do not replace confirmation.
 
 ### Claude: install the full plugin
 
@@ -61,7 +62,7 @@ Use **your own Client Portal login**. Each person can only see and change what t
 5. Start a chat and ask, **"What messages came in overnight that need action?"**
 6. When Claude asks to connect, enter your usual Client Portal web address if prompted, then sign in on the secure portal page. Complete two-factor authentication if applicable and approve access.
 
-If your organization wants to distribute this plugin to staff, its Claude owner can upload a reviewed plugin ZIP in **Organization settings > Plugins & skills**. **Public GitHub repositories cannot be directly synced to Claude organization marketplaces**; organization owners may alternatively maintain a private/internal marketplace copy for syncing.
+If your organization wants to distribute this plugin to authorized users, its Claude owner can upload a reviewed plugin ZIP in **Organization settings > Plugins & skills**. **Public GitHub repositories cannot be directly synced to Claude organization marketplaces**; organization owners may alternatively maintain a private/internal marketplace copy for syncing.
 
 [Claude plugin help](https://support.claude.com/en/articles/13837440-use-plugins-in-claude) · [Claude organization distribution](https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization)
 
@@ -74,7 +75,7 @@ If it isn't listed, a **ChatGPT Business, Enterprise or Edu workspace administra
 1. Open **Plugins**, select **+ > Add custom MCP server**.
 2. Set the name to **Kauneonga** and paste `https://mcp.kauneonga.com/api/v2/mcp` as the HTTPS server address.
 3. Configure OAuth sign-in, review the connection warning, then choose **Create as a plugin**.
-4. Review and test the discovered tools and permitted actions before publishing it to the appropriate workspace members.
+4. **Allow read-only tools only** for MCP-only installation. Before enabling any write tool, independently test explicit per-action confirmation, appropriate recipients/targets, and readback verification. If the workspace cannot enforce those safeguards, do not expose write tools. Then publish to authorized members.
 
 Once available, choose the plugin when composing a message and ask **"Who is on call tonight?"**. A custom MCP plugin exposes the server's tools; importing the separate guided skills requires a compatible plugin distribution process.
 
@@ -84,24 +85,38 @@ Once available, choose the plugin when composing a message and ask **"Who is on 
 
 ### Gemini: connect with Google
 
-**Gemini Enterprise (managed business use):** A Gemini Enterprise or Google Cloud administrator can configure a **custom MCP server data store** using `https://mcp.kauneonga.com/api/v2/mcp`. The administrator must supply supported **OAuth 2.0** connection details, verify authentication, explicitly enable permitted tools, and test the experience before giving staff access. This is **not a one-click plugin installation**, and the integration has not been independently validated for this server.
+**Gemini Enterprise (managed business use):** A Gemini Enterprise or Google Cloud administrator can configure a **custom MCP server data store** using `https://mcp.kauneonga.com/api/v2/mcp`. The administrator must supply supported **OAuth 2.0** connection details, verify authentication, **allow read-only tools initially**, and test the experience before providing access. Do not enable customer write tools until confirmations, exact recipients and post-action verification are enforced. This is **not a one-click plugin installation**, and the integration has not been independently validated for this server.
 
 [Gemini Enterprise custom MCP documentation](https://docs.cloud.google.com/gemini/enterprise/docs/connectors/custom-mcp-server/set-up-custom-mcp-server)
 
 **Personal Gemini:** Google also supports custom MCP apps for eligible adults in the US using a **personal Google account**, with **Keep Activity** enabled. Work or school Google accounts are not eligible for this personal custom-app feature. If you are eligible and have confirmed that your organization's/client's privacy policy permits using the account, open [Gemini](https://gemini.google.com) on the web, go to **Settings > Connected Apps > Add a custom app**, enter `https://mcp.kauneonga.com/api/v2/mcp`, and follow the sign-in steps.
 
-**Do not use a personal AI account for client messages, medical information, or other confidential data without appropriate authorization.** The Gemini connection exposes MCP tools, not the repository's bundled skills. Actual OAuth support still needs testing.
+**Do not connect the production customer MCP server through a personal Gemini account.** This path is for evaluating eligibility and technical compatibility only with nonproduction test data until a company-approved deployment enforces read-only access and data protection. Gemini does not automatically import bundled confirmation skills. OAuth support remains unverified.
 
 [Google's custom-app instructions](https://support.google.com/gemini/answer/17209137)
 
 ### Other assistants (technical setup)
 
-For **Claude Code**, use the plugin marketplace command:
+For **Claude Code**, install the complete plugin from its marketplace:
+
+```text
+/plugin install kauneonga --marketplace Kauneonga/kauneonga-plugin
+```
+
+For older Claude Code versions, add the marketplace first:
 
 ```text
 /plugin marketplace add Kauneonga/kauneonga-plugin
 /plugin install kauneonga@kauneonga
 ```
+
+For **Codex, Cursor and other compatible coding agents**, install the guided skills using [the skills CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md) (requires Node.js):
+
+```bash
+npx skills add Kauneonga/kauneonga-plugin
+```
+
+This command installs skills for compatible local coding agents; it **does not connect or authorize the MCP server**. Configure that separately below. The skills are instructions, not a substitute for tool-level permission checks and confirmations.
 
 For **Gemini CLI**, configure the remote MCP server:
 
@@ -109,7 +124,7 @@ For **Gemini CLI**, configure the remote MCP server:
 gemini mcp add -t http -s user kauneonga https://mcp.kauneonga.com/api/v2/mcp
 ```
 
-Then follow Gemini CLI's authorization instructions. For **Codex, Cursor and other MCP-compatible agents**, add a remote Streamable HTTP MCP server with the same HTTPS address. If the tool supports importing skills, you can separately install compatible workflows from this repository's `skills/` directory.
+Then follow Gemini CLI's authorization instructions. For **Codex, Cursor and other MCP-compatible agents**, add a remote Streamable HTTP MCP server with the same HTTPS address **only in an approved, read-only configuration**. Do not enable write tools without independently tested per-action confirmation and result verification. The `npx skills add` command above supplies compatible guided skills, but doesn't itself configure MCP or enforce safety.
 
 [Gemini CLI MCP documentation](https://geminicli.com/docs/tools/mcp-server/)
 
@@ -119,7 +134,7 @@ Then follow Gemini CLI's authorization instructions. For **Codex, Cursor and oth
 - **Sign-in not working:** Make sure you enter the normal Client Portal address when asked. Use the secure authorization page, not a chat message, for passwords and two-factor codes.
 - **Can't access an account or action:** Your Client Portal permissions apply in every AI assistant.
 - **A skill isn't available in ChatGPT or Gemini:** Those apps may have the MCP tools without the guided skills included with the Claude package. That is expected unless the skills were installed separately.
-- **Asked to confirm a change:** Check exactly what will change before approving. Do not share card or bank details with the AI assistant.
+- **Asked to confirm a change:** Check exactly what will change before approving. If an MCP-only client offers actions without confirmation, stop using its write tools. Do not share card or bank details with the AI assistant.
 
 ## Your data and permissions
 
