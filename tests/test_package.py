@@ -20,7 +20,7 @@ EXPECTED_SKILLS = {
     "contact-delivery",
 }
 # Words and phrases public material must not contain: internal systems, vendors,
-# staff-only roles and other brands. Stored as SHA-256 hashes of the lowercase
+# restricted internal roles and other brands. Stored as SHA-256 hashes of the lowercase
 # phrase so this file doesn't name them; ask a maintainer for the list.
 FORBIDDEN_SHA256 = {
     "ade19f5315c3cf44cbc4d01d062b19745eb686558cca562cebbe7935a571e525",
