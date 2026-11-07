@@ -27,6 +27,7 @@
         "longDescription": "Connect your answering service account with your own client portal login to review messages, set up follow-up To Dos, see and change who's on call, and update how your contacts receive messages. You see and change only what your login can in the client portal, and every change is confirmed with you first.",
         "developerName": "Kauneonga LLC",
         "logo": "./assets/logo.png",
+        "composerIcon": "./assets/logo.png",
         "category": "Productivity",
         "capabilities": [
           "Read",
