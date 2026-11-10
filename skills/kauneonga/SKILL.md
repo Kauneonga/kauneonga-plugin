@@ -17,9 +17,13 @@ can in the client portal, with or without a skill.
 | Cover time off, swap or move a shift, who's on call tonight | `oncall-changes` |
 | Review or change escalation levels, if authorized | `oncall-changes` |
 | A new cell number, texts instead of calls, add or stop an email | `contact-delivery` |
+| Someone didn't get a message, got it late, or the wrong person got it | `message-delivery` |
+| Any gaps in on-call coverage this week, this weekend or over a holiday | `coverage-check` |
+| Who has portal access, the contacts directory, the account's lines | `account-and-access` |
 
-**Someone wasn't reached:** check who was on call with `oncall-changes`, then how they are
-reached with `contact-delivery`.
+**Someone wasn't reached:** start with `message-delivery`. It checks the message's
+history, who was on call and how they're reached, then hands the fix to
+`oncall-changes` or `contact-delivery`.
 
 ## When the question is how something works
 

@@ -155,6 +155,9 @@ Then follow Gemini CLI's authorization instructions. For **Codex, Cursor and oth
 | `message-triage` | Separates the messages that need action now from the ones that can wait, and records what you did |
 | `oncall-changes` | Covers time off, swaps or moves shifts, and answers who's on call |
 | `contact-delivery` | Updates how on-call people are reached: numbers, texts, email |
+| `message-delivery` | Traces a message that didn't arrive and finds the cause |
+| `coverage-check` | Finds gaps in upcoming on-call coverage |
+| `account-and-access` | Shows who has portal access, the contacts directory and the account's lines |
 
 The skills only guide the order of the work. Every rule is enforced by the
 connector, which also works without this plugin.

@@ -12,7 +12,7 @@
       "name": "kauneonga",
       "source": "./",
       "description": "Work with your answering service from Claude: check your messages, set up follow-up To Dos, and update who's on call and how they're reached, with your own client portal login.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Kauneonga LLC",
         "url": "https://www.kauneonga.com"

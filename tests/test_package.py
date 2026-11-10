@@ -18,6 +18,9 @@ EXPECTED_SKILLS = {
     "message-triage",
     "oncall-changes",
     "contact-delivery",
+    "message-delivery",
+    "coverage-check",
+    "account-and-access",
 }
 # Words and phrases public material must not contain: internal systems, vendors,
 # restricted internal roles and other brands. Stored as SHA-256 hashes of the lowercase
