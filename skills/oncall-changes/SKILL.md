@@ -34,13 +34,35 @@ Always in this order:
 
 | Request | How |
 |---|---|
-| Cover time off | Add a shift for the person covering with `create_calendar_event`. To take one occurrence out of a repeating series, detach that occurrence first, then change the detached copy |
+| Cover time off | One date of a repeating shift: change only that date (see below). Otherwise add a shift for the person covering with `create_calendar_event` |
 | Swap two shifts | Confirm both changes before making either. If only one succeeds, tell the user immediately and do not imply the swap is complete |
-| Change a repeating shift | `update_calendar_event`, for one occurrence or the whole series. Ask which; never assume the series |
+| Change a repeating shift | Ask whether it's only that date or every date, then follow "One date of a repeating shift" below. Never assume the series |
 | Copy a week | `copy_calendar_event` |
 | Remove shifts | `delete_calendar_event` for one, `delete_calendar_events` for several. Read back exactly what will go |
 | Add a person | `create_calendar_contact`, at least one way to reach them (see `contact-delivery`), then give them shifts |
 | Add or edit escalation levels | Check `list_escalation_levels`, confirm the plan, then use `create_escalation_level` or `update_escalation_level` where authorized. Read back the level order. Clients can't delete a level: if they want one removed, say their answering service can remove it |
+
+## One date of a repeating shift
+
+"Move Saturday's shift to Dr. Patel" can mean this Saturday or every Saturday. Ask which
+before changing anything, unless the person already said ("only this Saturday", "from
+now on").
+
+- **Only that date:** `create_calendar_event` with action `detach`. `parent_id` is the
+  repeating shift, `original_start_date` is that date's start as the calendar shows it
+  (for example `2026-11-21 08:00`), and `start_date`, `end_date`, `contact_id` and
+  `delivery_method_ids` are what that date becomes. Leave `schedule` out. Every other
+  date stays as it was.
+- **Take one date off:** `update_calendar_event` with action `delete` and that date's
+  start as `start_date`.
+- **Every date:** `update_calendar_event` with action `update` on the repeating shift.
+  Leave `schedule` out so it keeps repeating. If the tool says `schedule` is missing,
+  send the shift's current `schedule` from `get_calendar_event`, unchanged.
+
+`update_calendar_event` on a repeating shift changes every date of it. Never send
+`schedule` "null" to change one date: that stops the shift repeating and removes every
+later date. Send it only when the person asks for the shift to stop repeating, together
+with `stop_repeating` set to true.
 
 ## "The wrong person got called"
 
