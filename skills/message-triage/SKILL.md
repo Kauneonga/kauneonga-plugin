@@ -63,6 +63,8 @@ only on the intended message and account. Never invent success.
 - **Notes:** `list_message_notes` to read them, `create_message_note` to record work
   done, `delete_message_note` to remove one. Others on the account see notes, so show the
   exact text and get a yes before adding or deleting.
-- **Recording:** `list_message_call_recording` gives the recording linked to a message,
-  if the login has call recording access. Treat it as sensitive and share only what was
+- **Recording:** `list_message_call_recording` gives the details of the call linked to a
+  message: its time, the caller's number and the line, if the login has call recording
+  access. It returns no audio and no transcript, so never offer to play, share or
+  summarize the recording itself. Treat the details as sensitive and share only what was
   asked for.

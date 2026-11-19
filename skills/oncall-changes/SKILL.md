@@ -82,7 +82,9 @@ For more than a few shifts, such as a month of nights or next week's copy of thi
    If the person saves it from the preview, it's done: don't save it again.
 3. On a yes in the chat, `create_calendar_events` with the same list. It saves all of
    them or none: if any shift is refused, fix those and send the whole list again.
-4. Read the calendar back for the first and last days, for every level involved.
+4. Read the calendar back for the whole range, for every level involved, and compare
+   every saved shift with the confirmed list. Report any that are missing or different,
+   and fix them before saying it's done.
 
 If `preview_calendar_events` or `create_calendar_events` isn't in your tool list yet,
 show the list in the chat, get one yes, and add the shifts one at a time with

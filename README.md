@@ -162,8 +162,10 @@ Then follow Gemini CLI's authorization instructions. For **Codex, Cursor and oth
 | `coverage-check` | Finds gaps in upcoming on-call coverage |
 | `account-and-access` | Shows who has portal access, the contacts directory (with an export) and the account's lines |
 
-The skills only guide the order of the work. Every rule is enforced by the
-connector, which also works without this plugin.
+The connector enforces who may see and change what, with or without this plugin.
+Asking for a yes before each change comes from these skills and your AI app's own
+approval prompts, not from the connector, so keep your app's approval prompts on when
+you use the connector without the plugin.
 
 ## Help
 
