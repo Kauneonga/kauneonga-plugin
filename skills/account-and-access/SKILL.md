@@ -1,6 +1,6 @@
 ---
 name: account-and-access
-description: See who has access to the client portal and what each person can do, look up someone in the account's contacts directory, and list the account's lines. Use for "who can change our on-call", "does Sam have access to reports" or "find Dr. Lee's number in our contacts".
+description: See who has access to the client portal and what each person can do, look up or export the account's contacts directory, and list the account's lines. Use for "who can change our on-call", "does Sam have access to reports", "find Dr. Lee's number in our contacts" or "send me our contacts as a spreadsheet".
 ---
 
 # Account, access and contacts
@@ -14,10 +14,15 @@ This only reads.
   reports and the rest. Use it to answer whether someone can make or request a change.
   This plugin can't add or remove portal users; the account owner or the answering
   service does that.
-- **Contacts directory:** `search_account_contacts` by name or number, or
-  `list_account_contacts`; `get_account_contact` for one person. For a long directory,
-  page by letter with `list_account_contacts_alphabetical_index_count` and
+- **Contacts directory:** the people who called, texted or chatted in, and any added by
+  hand. `search_account_contacts` by name or number, or `list_account_contacts`;
+  `get_account_contact` for one person. For a long directory, page by letter with
+  `list_account_contacts_alphabetical_index_count` and
   `list_account_contacts_alphabetical_index_bucket`.
+- **Export the directory:** `export_account_contacts` makes one spreadsheet (CSV) of the
+  directory for one account, or for every account this login can see, and returns a
+  download link that works for about an hour. Share the link; don't open the file in the
+  chat. If it isn't in your tool list yet, page through the directory as above instead.
 
 The directory is separate from the people on the on-call calendar. To change how an
 on-call person is reached, use `contact-delivery`.

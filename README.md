@@ -9,12 +9,14 @@ and who's on call, and make the changes your login allows.
 - **Catch up on messages.** See what needs action first, add or delete a note,
   mark a message read or unread, acknowledge it, change its status, or add a
   new message.
-- **Follow up.** Set up a To Do (a call, text or email, now or on a schedule),
-  or delete one.
+- **Follow up.** See your open To Dos, set one up (a call, text or email, now or
+  on a schedule), delete one, or find out why a follow-up didn't go out.
 - **Check and change who's on call.** See who's on call tonight and who backs
   them up. If your login has **Oncall Calendar Management** access, cover time
-  off, swap or move shifts, change escalation levels, and update your on-call
-  contacts and how each one is reached.
+  off, swap or move shifts, add a month of shifts at once, change escalation
+  levels, and update your on-call contacts and how each one is reached.
+- **Trace a message that didn't arrive** and check upcoming on-call coverage for
+  gaps.
 
 Try asking: "What came in overnight that needs action?", "Who's on call
 tonight?" or "Move Saturday's shift from Dr. Lee to Dr. Patel."
@@ -152,12 +154,13 @@ Then follow Gemini CLI's authorization instructions. For **Codex, Cursor and oth
 |---|---|
 | `kauneonga` | Picks the right skill for a request, and the order when a job needs several |
 | `setup` | Connects your account and checks what your login can reach |
-| `message-triage` | Separates the messages that need action now from the ones that can wait, and records what you did |
-| `oncall-changes` | Covers time off, swaps or moves shifts, and answers who's on call |
+| `message-triage` | Separates the messages that need action now from the ones that can wait, acknowledges them, and records notes |
+| `follow-ups` | Lists, adds and closes To Dos, and finds out why a follow-up or callback didn't happen |
+| `oncall-changes` | Covers time off, swaps or moves shifts, adds many shifts at once, manages escalation levels, and answers who's on call |
 | `contact-delivery` | Updates how on-call people are reached: numbers, texts, email |
 | `message-delivery` | Traces a message that didn't arrive and finds the cause |
 | `coverage-check` | Finds gaps in upcoming on-call coverage |
-| `account-and-access` | Shows who has portal access, the contacts directory and the account's lines |
+| `account-and-access` | Shows who has portal access, the contacts directory (with an export) and the account's lines |
 
 The skills only guide the order of the work. Every rule is enforced by the
 connector, which also works without this plugin.
@@ -168,5 +171,6 @@ Contact your answering service.
 
 ---
 
-Maintaining this plugin? See [docs/MAINTAINING.md](docs/MAINTAINING.md).
+Maintaining this plugin? See [docs/MAINTAINING.md](docs/MAINTAINING.md). AI coding
+agents: see [AGENTS.md](AGENTS.md).
 Licensed under the [MIT License](LICENSE).
