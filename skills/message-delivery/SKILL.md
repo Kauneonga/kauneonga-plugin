@@ -30,6 +30,24 @@ If several match, list them briefly and ask which one.
 3. `list_delivery_methods` for the person who was on call: the number, email and method
    on file.
 
+## Known causes
+
+Check these first. The first three show up in the records above; for the last two, ask
+the person.
+
+- **The person on call has no way to be reached:** no delivery method on file, or only
+  an old number or email (`list_delivery_methods`).
+- **A level has no one on it at that hour:** no shift on that level covers the message's
+  time, so nobody there was tried (`list_calendar_events` for that level).
+- **Call order on a shared level:** when two or more people are on one level at the same
+  time, texts, emails and app alerts go to all of them at once, but calls go one at a
+  time in the order set on their shifts. Shifts with no order set are called in the
+  order they were added, so the person added last is called last.
+- **Texts stopped after STOP:** if the person replied STOP to one of the texts, texts to
+  them stop. They text START to the number the texts come from to get them again.
+- **An email bounced or was filtered:** check the address on file letter by letter, and
+  ask them to look in their spam or filtered folders.
+
 ## Report
 
 Say plainly:
@@ -43,7 +61,7 @@ zone.
 
 ## Fixing it
 
-Offer the fix and use the skill that makes it: `oncall-changes` for the schedule,
-`contact-delivery` for a number or method. If the records show the message went to the
-right person the right way but never arrived, the answering service needs to look into
-delivery: say so, rather than changing settings to test it.
+Offer the fix and use the skill that makes it: `oncall-changes` for the schedule or the
+call order on a level, `contact-delivery` for a number or method. If the records show
+the message went to the right person the right way but never arrived, the answering
+service needs to look into delivery: say so, rather than changing settings to test it.
