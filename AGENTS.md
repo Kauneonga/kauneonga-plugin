@@ -42,18 +42,29 @@ claude plugin validate --strict .
 
 ## Rules
 
-- Skills may name only tools the connector actually serves. If you rename or remove a
-  tool reference, update every skill that mentions it.
+- Keep one shared `skills/` tree for every agent. Don't add per-app copies of a skill.
+- Skills are for clients of the answering service. They may name only tools the client
+  connector actually serves, never tools meant for answering service staff. If you
+  rename or remove a tool reference, update every skill that mentions it.
+- A tool that is announced but not yet served may be named only with a one-line
+  fallback saying what to do when it isn't in the tool list.
 - The connector enforces access. Skills confirm changes with the user, call out cost and
-  effects that can't be undone, and never work around a refusal.
+  effects that can't be undone, verify the result before saying it's done, and never
+  work around a refusal.
+- Never fabricate account, phone, calendar or message ids: use only ids the tools
+  return for the signed-in login.
+- Clients can't delete an escalation level. Skills never offer to.
+- This plugin has no billing or payment tools. Never collect card, bank or payment
+  details through an AI chat.
 - Keep the version identical in `plugin.json`, `.claude-plugin/plugin.json` and
   `.claude-plugin/marketplace.json`, and the connector URL identical in `mcp.json` and
   `.mcp.json`.
 - Never add credentials, API keys, `headers` blocks, reviewer logins or real client data
-  to any file.
+  to any file. Examples use made-up names such as Dr. Lee and Northwind.
 - Public text (README, manifests, skills) must not name internal systems, vendors,
   staff-only roles or other brands. `tests/test_package.py` checks the public files.
-- Write for the end user: plain language, no internal jargon. Prices and plan details
-  come from https://www.kauneonga.com/pricing/, never from memory.
+- Write for the end user: plain language, no internal jargon, no em dashes. Prices and
+  plan details come from https://www.kauneonga.com/pricing/, never from memory.
 - Don't add new skills to `skills/` without also adding them to `EXPECTED_SKILLS` in
   `tests/test_package.py` and to the skills table in `README.md`.
+- Preserve the MIT copyright notice in `LICENSE`.
