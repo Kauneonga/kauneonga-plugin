@@ -16,6 +16,7 @@ EXPECTED_SKILLS = {
     "kauneonga",
     "setup",
     "message-triage",
+    "follow-ups",
     "oncall-changes",
     "contact-delivery",
     "message-delivery",
