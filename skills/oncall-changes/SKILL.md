@@ -45,8 +45,8 @@ Always in this order:
 ## One date of a repeating shift
 
 "Move Saturday's shift to Dr. Patel" can mean this Saturday or every Saturday. Ask which
-before changing anything, unless the person already said ("only this Saturday", "from
-now on").
+before changing anything, unless the person already said ("only this Saturday", "every
+Saturday").
 
 - **Only that date:** `create_calendar_event` with action `detach`. `parent_id` is the
   repeating shift, `original_start_date` is that date's start as the calendar shows it
@@ -57,7 +57,11 @@ now on").
   start as `start_date`.
 - **Every date:** `update_calendar_event` with action `update` on the repeating shift.
   Leave `schedule` out so it keeps repeating. If the tool says `schedule` is missing,
-  send the shift's current `schedule` from `get_calendar_event`, unchanged.
+  send the shift's current `schedule` from `get_calendar_event`, unchanged. A repeating
+  shift holds only its current and upcoming dates (past ones roll off), so this is also
+  "from now on".
+- **From a later date on** ("starting December 5"): changing every date would also change
+  the dates before it. Say so and ask how to handle those dates; don't pick for them.
 
 `update_calendar_event` on a repeating shift changes every date of it. Never send
 `schedule` "null" to change one date: that stops the shift repeating and removes every
