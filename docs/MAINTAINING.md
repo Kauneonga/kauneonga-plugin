@@ -46,6 +46,13 @@ The offline checks also build the ChatGPT ZIP. Build it on its own with
 `python3 scripts/build_chatgpt_package.py` (written to `dist/`), and submit it with the
 **With MCP** flow.
 
+To update the plugin already created in the OpenAI dashboard, build with
+`python3 scripts/build_chatgpt_package.py dist/kauneonga-chatgpt.zip --openai-app-id <app id>`:
+the dashboard requires that id as the package name and refuses a sign-in block in
+`mcp.json`. OpenAI's review test cases (exactly 5 positive and 3 negative) live in
+`plugins/kauneonga/plugin.json` under `extensions.com.openai.review`; reviewer logins go
+in the dashboard's review form, never in the package.
+
 ## Before listing in a directory
 
 - Claude directory: submit the repository with the path `plugins/kauneonga`.

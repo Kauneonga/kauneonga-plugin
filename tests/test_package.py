@@ -154,6 +154,27 @@ def check_chatgpt_package():
     skills = {n.split("/")[1] for n in names if n.startswith("skills/")}
     assert skills == EXPECTED_SKILLS, skills
     assert not any(n.startswith(".claude-plugin/") or n == ".mcp.json" for n in names)
+    with tempfile.TemporaryDirectory() as tmp:
+        out = build_chatgpt_package.build(pathlib.Path(tmp) / "pkg.zip", "app-test")
+        with zipfile.ZipFile(out) as zf:
+            assert json.loads(zf.read("plugin.json"))["name"] == "app-test"
+            server = json.loads(zf.read("mcp.json"))["mcpServers"][EXPECTED_NAME]
+            assert "auth" not in server.get("extensions", {}).get("com.openai", {}), server
+
+
+def check_review_metadata():
+    """OpenAI's first MCP review needs exactly 5 positive and 3 negative test cases."""
+    review = read_json(f"{PLUGIN}/plugin.json")["extensions"]["com.openai"]["review"]
+    cases = review["test_cases"]
+    assert len(cases["positive"]) == 5 and len(cases["negative"]) == 3, cases
+    served = set(re.findall(r"`([a-z]+_[a-z_]+)`", (ROOT / "docs" / "TOOLS.md").read_text(encoding="utf-8")))
+    for case in cases["positive"]:
+        assert case["prompt"] and case["expected_behavior"] and len(case["description"]) <= 4000, case
+        for tool in (t.strip() for t in case["tools_triggered"].split(",")):
+            assert tool in served, f"{tool} is not a client connector tool"
+    for case in cases["negative"]:
+        assert case["prompt"] and case["description"], case
+    assert "test_credentials" not in review and "reviewer_instructions" not in review, "reviewer access goes in the dashboard"
 
 
 def check_directory_folder():
@@ -184,6 +205,7 @@ if __name__ == "__main__":
     check_skills()
     check_public_text()
     check_chatgpt_package()
+    check_review_metadata()
     check_directory_folder()
     check_license()
     print("PASS")
