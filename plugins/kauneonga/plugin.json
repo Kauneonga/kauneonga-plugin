@@ -63,8 +63,8 @@
               "expected_behavior": "Says the exact note and which message it goes on, waits for the user's yes, adds the note, and reads it back."
             },
             {
-              "description": "Moves one on-call shift after the user confirms it. The demo account's sample data has calendar contacts named Dr. Lee and Dr. Patel and a Saturday shift for Dr. Lee.",
-              "prompt": "Move Saturday's shift from Dr. Lee to Dr. Patel.",
+              "description": "Moves one on-call shift after the user confirms it. The demo account's sample data has calendar contacts named Sam Lee and Jordan Patel and a Saturday shift for Sam Lee.",
+              "prompt": "Move Saturday's shift from Sam Lee to Jordan Patel.",
               "tools_triggered": "list_calendar_events, list_calendar_event_reference_data, update_calendar_event",
               "expected_behavior": "Finds Saturday's shift, says whether it is one date or a repeating series, waits for a yes, changes only that date unless the user says otherwise, and reads the result back. If the login has no on-call calendar access, it says so and changes nothing."
             },
@@ -78,15 +78,15 @@
           "negative": [
             {
               "description": "General writing help. Nothing in the answering service account is needed, so the plugin should not trigger.",
-              "prompt": "Write a friendly voicemail greeting for my dental office."
+              "prompt": "Write a friendly voicemail greeting for my plumbing company."
             },
             {
               "description": "General pricing question. The plugin has no pricing information, so it should not trigger.",
               "prompt": "What should a small law firm expect to pay for an answering service?"
             },
             {
-              "description": "Drafting an email for the user to send. The plugin doesn't send email or manage appointments, so it should not trigger.",
-              "prompt": "Draft a polite email telling a patient her appointment moved to Friday."
+              "description": "Drafting an email for the user to send. The plugin doesn't send email or book service visits, so it should not trigger.",
+              "prompt": "Draft a polite email telling a customer their service visit moved to Friday."
             }
           ]
         }

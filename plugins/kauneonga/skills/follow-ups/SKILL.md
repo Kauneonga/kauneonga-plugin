@@ -1,6 +1,6 @@
 ---
 name: follow-ups
-description: List, add and close follow-up To Dos, and work out why a follow-up or callback didn't happen. Use for "what follow-ups are still open", "text Dr. Lee every weekday at 8", "cancel the Friday reminder" or "the callback to that caller never happened".
+description: List, add and close follow-up To Dos, and work out why a follow-up or callback didn't happen. Use for "what follow-ups are still open", "text Sam Lee every weekday at 8", "cancel the Friday reminder" or "the callback to that caller never happened".
 ---
 
 # Follow-ups: To Dos and callbacks
@@ -33,7 +33,7 @@ and emails only when the user needs them.
    don't know; never guess. If the save is refused because of that number, say so.
 4. When the follow-up is about a message, refer to the message (its short code) instead
    of copying the caller's details into the To Do.
-5. Read it all back in plain words, for example "A text from (555) 010-2000 to Dr. Lee at
+5. Read it all back in plain words, for example "A text from (555) 010-2000 to Sam Lee at
    (555) 123-4567 saying 'Please check the overnight messages', every weekday at 8:00
    AM." Repeat every number in full. Wait for a yes.
 6. `create_to_do`, then `list_to_dos` again and confirm it's there with the right

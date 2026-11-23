@@ -69,7 +69,7 @@ claude plugin validate --strict plugins/kauneonga
   one `skills/` tree. Don't add logo fields to the portable `plugin.json`: the directory
   refuses a folder where a file names an image, and the ChatGPT build adds them.
 - Never add credentials, API keys, `headers` blocks, reviewer logins or real client data
-  to any file. Examples use made-up names such as Dr. Lee and Northwind.
+  to any file. Examples use made-up names such as Sam Lee and Northwind.
 - Public text (README, manifests, skills) must not name internal systems, vendors,
   staff-only roles or other brands. `tests/test_package.py` checks the public files.
 - Write for the end user: plain language, no internal jargon, no em dashes. Prices and

@@ -15,16 +15,16 @@ subject across the retained window, and `get_message_by_short_code` finds one fr
 link in a delivered message. Open a message in full with `get_message` only when the user
 asks about that one: opening it marks it read.
 
-Read before summarizing. Messages carry caller PII and, for medical practices, clinical
-detail. Minimize disclosure: report only what the user needs, and do not include
+Read before summarizing. Messages carry callers' personal details and whatever else they
+chose to share. Minimize disclosure: report only what the user needs, and do not include
 sensitive details in unnecessary tool calls or external messages.
 
 ## Sort
 
 Group into three buckets and lead with the first:
 
-**Needs action now:** anything flagged as an emergency, a caller reporting a symptom or
-situation that escalates with time, a second call from the same person, or a message whose
+**Needs action now:** anything flagged as an emergency, a caller reporting a
+situation that gets worse with time, a second call from the same person, or a message whose
 delivery has not been acknowledged past its escalation window.
 
 **Needs a reply today:** routine callbacks, scheduling requests, questions with a named
