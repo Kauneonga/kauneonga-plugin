@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "kauneonga",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Your answering service messages, follow-up To Dos, on-call schedules and how contacts are reached, with your own client portal login.",
   "author": {
     "name": "Kauneonga LLC",
@@ -26,8 +26,6 @@
         "shortDescription": "Your answering service",
         "longDescription": "Connect your answering service account with your own client portal login to review messages, set up follow-up To Dos, see and change who's on call, and update how your contacts receive messages. You see and change only what your login can in the client portal, and every change is confirmed with you first.",
         "developerName": "Kauneonga LLC",
-        "logo": "./assets/logo.png",
-        "composerIcon": "./assets/logo.png",
         "category": "Productivity",
         "capabilities": [
           "Read",

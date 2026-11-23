@@ -49,7 +49,7 @@ def names_something_internal(text):
 PUBLIC_FILES = [
     "README.md",
     "AGENTS.md",
-    "plugin.json",
+    f"{PLUGIN}/plugin.json",
     f"{PLUGIN}/README.md",
     f"{PLUGIN}/.claude-plugin/plugin.json",
     ".claude-plugin/marketplace.json",
@@ -67,9 +67,9 @@ def read_json(path):
 def check_manifests():
     claude = read_json(f"{PLUGIN}/.claude-plugin/plugin.json")
     marketplace = read_json(".claude-plugin/marketplace.json")
-    portable = read_json("plugin.json")
+    portable = read_json(f"{PLUGIN}/plugin.json")
     cmcp = read_json(f"{PLUGIN}/.mcp.json")
-    pmcp = read_json("mcp.json")
+    pmcp = read_json(f"{PLUGIN}/mcp.json")
 
     assert claude["name"] == portable["name"] == EXPECTED_NAME
     assert claude["version"] == portable["version"]
@@ -102,15 +102,14 @@ def check_manifests():
     assert listing["capabilities"] == ["Read", "Write"]
     for key in ("websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"):
         assert listing[key].startswith("https://"), key
-    check_logo(PLUGIN_DIR / listing["logo"])
+    assert "logo" not in listing and "composerIcon" not in listing, "the ZIP build adds the logo fields"
 
 
 def openai_privacy(portable):
     return portable["extensions"]["com.openai"]["interface"]["privacyPolicyURL"]
 
 
-def check_logo(path):
-    data = path.read_bytes()
+def check_logo_bytes(data):
     assert data[:8] == b"\x89PNG\r\n\x1a\n", "logo must be a PNG"
     width, height = struct.unpack(">II", data[16:24])
     assert width == height and width >= 48, (width, height)
@@ -145,7 +144,12 @@ def check_chatgpt_package():
 
     with tempfile.TemporaryDirectory() as tmp:
         out = build_chatgpt_package.build(pathlib.Path(tmp) / "pkg.zip")
-        names = set(zipfile.ZipFile(out).namelist())
+        with zipfile.ZipFile(out) as zf:
+            names = set(zf.namelist())
+            listing = json.loads(zf.read("plugin.json"))["extensions"]["com.openai"]["interface"]
+            for key in ("logo", "composerIcon"):
+                assert listing[key].lstrip("./") in names, (key, listing[key])
+                check_logo_bytes(zf.read(listing[key].lstrip("./")))
     assert {"plugin.json", "mcp.json", "LICENSE", "assets/logo.png"} <= names, names
     skills = {n.split("/")[1] for n in names if n.startswith("skills/")}
     assert skills == EXPECTED_SKILLS, skills
@@ -165,6 +169,8 @@ def check_directory_folder():
                 assert image.name not in text, f"{rel} names {image.name}"
     assert not (ROOT / ".claude-plugin" / "plugin.json").exists(), "Claude manifest lives in the plugin folder"
     assert not (ROOT / ".mcp.json").exists(), "Claude connector config lives in the plugin folder"
+    for name in ("plugin.json", "mcp.json", "skills"):
+        assert not (ROOT / name).exists(), f"{name} lives in the plugin folder, beside the skills"
 
 
 def check_license():
