@@ -48,7 +48,7 @@ Always in this order:
 
 ## One date of a repeating shift
 
-"Move Saturday's shift to Dr. Patel" can mean this Saturday or every Saturday. Ask which
+"Move Saturday's shift to Jordan Patel" can mean this Saturday or every Saturday. Ask which
 before changing anything, unless the person already said ("only this Saturday", "every
 Saturday").
 
@@ -93,7 +93,7 @@ show the list in the chat, get one yes, and add the shifts one at a time with
 ## Standard shift times
 
 `list_calendar_time_frames` shows the line's standard shifts, such as "Weeknight, 5:00
-PM to 8:00 AM the next day", so "Dr. Lee on weeknights December 1 to 4" gets the right
+PM to 8:00 AM the next day", so "Sam Lee on weeknights December 1 to 4" gets the right
 hours. To change them, read the current list, edit it, and send the whole list back with
 `update_calendar_time_frames`: it replaces the saved list, so anything left out is
 removed. Show the old and new times and get a yes first. Shifts already on the calendar

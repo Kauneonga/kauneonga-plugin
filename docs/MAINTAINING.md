@@ -11,8 +11,8 @@ One package serves Claude, ChatGPT and other agents, using the client connector:
 | `plugins/kauneonga/.claude-plugin/plugin.json` | Claude plugin identity and metadata |
 | `.claude-plugin/marketplace.json` | Claude marketplace listing this plugin, so people can install it from this repository |
 | `plugins/kauneonga/.mcp.json` | Claude connector configuration |
-| `plugin.json` | Portable Agent Plugins manifest, including the ChatGPT listing |
-| `mcp.json` | Portable connector configuration with the sign-in declaration |
+| `plugins/kauneonga/plugin.json` | Portable Agent Plugins manifest, including the ChatGPT listing (the ZIP build adds its logo fields) |
+| `plugins/kauneonga/mcp.json` | Portable connector configuration with the sign-in declaration |
 | `plugins/kauneonga/skills/` | One shared source of skills for every app |
 | `plugins/kauneonga/assets/logo.png` | ChatGPT listing logo: the 512 px icon the connector already serves |
 | `scripts/build_chatgpt_package.py` | Builds the ChatGPT upload ZIP |
@@ -27,8 +27,8 @@ One package serves Claude, ChatGPT and other agents, using the client connector:
   can't-be-undone effects, and never work around a refusal.
 - Public-facing material never names internal systems, vendors or restricted internal roles.
 - Keep the version the same in `plugins/kauneonga/.claude-plugin/plugin.json`,
-  `.claude-plugin/marketplace.json` and `plugin.json`, and the connector the same in
-  `plugins/kauneonga/.mcp.json` and `mcp.json`.
+  `.claude-plugin/marketplace.json` and `plugins/kauneonga/plugin.json`, and the connector
+  the same in `plugins/kauneonga/.mcp.json` and `plugins/kauneonga/mcp.json`.
 - The Claude directory scans only `plugins/kauneonga/`. From an organization that isn't
   Verified it accepts Markdown, JSON, images and the license there, and refuses a version
   where a file names an image. Keep scripts, tests and AGENTS.md outside that folder.
@@ -45,6 +45,13 @@ claude plugin validate --strict plugins/kauneonga
 The offline checks also build the ChatGPT ZIP. Build it on its own with
 `python3 scripts/build_chatgpt_package.py` (written to `dist/`), and submit it with the
 **With MCP** flow.
+
+To update the plugin already created in the OpenAI dashboard, build with
+`python3 scripts/build_chatgpt_package.py dist/kauneonga-chatgpt.zip --openai-app-id <app id>`:
+the dashboard requires that id as the package name and refuses a sign-in block in
+`mcp.json`. OpenAI's review test cases (exactly 5 positive and 3 negative) live in
+`plugins/kauneonga/plugin.json` under `extensions.com.openai.review`; reviewer logins go
+in the dashboard's review form, never in the package.
 
 ## Before listing in a directory
 

@@ -20,8 +20,8 @@ one logo, a packaging script and offline checks.
 
 | Path | Purpose |
 |---|---|
-| `plugin.json` | Portable Agent Plugins manifest (agent-plugins.org), including the ChatGPT listing |
-| `mcp.json` | Portable connector configuration with the sign-in declaration |
+| `plugins/kauneonga/plugin.json` | Portable Agent Plugins manifest (agent-plugins.org), including the ChatGPT listing; the ZIP build adds its logo fields |
+| `plugins/kauneonga/mcp.json` | Portable connector configuration with the sign-in declaration |
 | `plugins/kauneonga/` | The Claude plugin, the folder submitted to the Claude directory |
 | `plugins/kauneonga/.claude-plugin/plugin.json` | Claude plugin manifest |
 | `plugins/kauneonga/.mcp.json` | Claude connector configuration |
@@ -62,11 +62,14 @@ claude plugin validate --strict plugins/kauneonga
 - Clients can't delete an escalation level. Skills never offer to.
 - This plugin has no billing or payment tools. Never collect card, bank or payment
   details through an AI chat.
-- Keep the version identical in `plugin.json`, `plugins/kauneonga/.claude-plugin/plugin.json`
-  and `.claude-plugin/marketplace.json`, and the connector URL identical in `mcp.json` and
-  `plugins/kauneonga/.mcp.json`.
+- Keep the version identical in `plugins/kauneonga/plugin.json`,
+  `plugins/kauneonga/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, and
+  the connector URL identical in `plugins/kauneonga/mcp.json` and `plugins/kauneonga/.mcp.json`.
+- `plugins/kauneonga/` is the package root for every app, so both manifests sit beside the
+  one `skills/` tree. Don't add logo fields to the portable `plugin.json`: the directory
+  refuses a folder where a file names an image, and the ChatGPT build adds them.
 - Never add credentials, API keys, `headers` blocks, reviewer logins or real client data
-  to any file. Examples use made-up names such as Dr. Lee and Northwind.
+  to any file. Examples use made-up names such as Sam Lee and Northwind.
 - Public text (README, manifests, skills) must not name internal systems, vendors,
   staff-only roles or other brands. `tests/test_package.py` checks the public files.
 - Write for the end user: plain language, no internal jargon, no em dashes. Prices and

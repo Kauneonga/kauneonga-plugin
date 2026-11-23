@@ -1,6 +1,6 @@
 ---
 name: account-and-access
-description: See who has access to the client portal and what each person can do, look up or export the account's contacts directory, and list the account's lines. Use for "who can change our on-call", "does Sam have access to reports", "find Dr. Lee's number in our contacts" or "send me our contacts as a spreadsheet".
+description: See who has access to the client portal and what each person can do, look up or export the account's contacts directory, and list the account's lines. Use for "who can change our on-call", "does Sam have access to reports", "find Sam Lee's number in our contacts" or "send me our contacts as a spreadsheet".
 ---
 
 # Account, access and contacts

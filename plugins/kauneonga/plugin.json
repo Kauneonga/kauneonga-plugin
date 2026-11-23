@@ -1,0 +1,99 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "kauneonga",
+  "version": "1.3.1",
+  "description": "Your answering service messages, follow-up To Dos, on-call schedules and how contacts are reached, with your own client portal login.",
+  "author": {
+    "name": "Kauneonga LLC",
+    "url": "https://www.kauneonga.com"
+  },
+  "homepage": "https://www.kauneonga.com/",
+  "repository": "https://github.com/Kauneonga/kauneonga-plugin",
+  "license": "MIT",
+  "keywords": [
+    "answering-service",
+    "client-portal",
+    "messages",
+    "on-call",
+    "scheduling",
+    "mcp"
+  ],
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md",
+      "interface": {
+        "displayName": "Kauneonga",
+        "shortDescription": "Your answering service",
+        "longDescription": "Connect your answering service account with your own client portal login to review messages, set up follow-up To Dos, see and change who's on call, and update how your contacts receive messages. You see and change only what your login can in the client portal, and every change is confirmed with you first.",
+        "developerName": "Kauneonga LLC",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://www.kauneonga.com/",
+        "supportURL": "https://www.kauneonga.com/",
+        "privacyPolicyURL": "https://www.kauneonga.com/privacy-policy/",
+        "termsOfServiceURL": "https://www.kauneonga.com/terms-and-conditions/",
+        "defaultPrompt": [
+          "Show me the messages I need to follow up on today.",
+          "Who is on call for my line tonight?",
+          "Which To Dos are still open on my account?"
+        ]
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Message triage: lists the messages that still need action, first. Read only.",
+              "prompt": "Show me the messages I need to follow up on today.",
+              "tools_triggered": "list_recent_messages, list_messages",
+              "expected_behavior": "Lists the messages that still need action first, with the caller and how long each has waited, from the accounts the login can see. Changes nothing."
+            },
+            {
+              "description": "On-call lookup for one phone line. Read only.",
+              "prompt": "Who is on call for my line tonight?",
+              "tools_triggered": "list_account_phones, list_phone_events_on_call",
+              "expected_behavior": "Names who is on call at each escalation level tonight, with times in the line's time zone. Changes nothing."
+            },
+            {
+              "description": "Adds a note to a message after the user confirms it.",
+              "prompt": "Add a note to the latest message saying I called them back.",
+              "tools_triggered": "list_recent_messages, create_message_note",
+              "expected_behavior": "Says the exact note and which message it goes on, waits for the user's yes, adds the note, and reads it back."
+            },
+            {
+              "description": "Moves one on-call shift after the user confirms it. The demo account's sample data has calendar contacts named Sam Lee and Jordan Patel and a Saturday shift for Sam Lee.",
+              "prompt": "Move Saturday's shift from Sam Lee to Jordan Patel.",
+              "tools_triggered": "list_calendar_events, list_calendar_event_reference_data, update_calendar_event",
+              "expected_behavior": "Finds Saturday's shift, says whether it is one date or a repeating series, waits for a yes, changes only that date unless the user says otherwise, and reads the result back. If the login has no on-call calendar access, it says so and changes nothing."
+            },
+            {
+              "description": "Lists open follow-up To Dos. Read only.",
+              "prompt": "Which follow-up To Dos are still open on my account?",
+              "tools_triggered": "list_to_dos",
+              "expected_behavior": "Lists the open To Dos with their type (call, text or email), recipient and scheduled time. Changes nothing."
+            }
+          ],
+          "negative": [
+            {
+              "description": "General writing help. Nothing in the answering service account is needed, so the plugin should not trigger.",
+              "prompt": "Write a friendly voicemail greeting for my plumbing company."
+            },
+            {
+              "description": "General pricing question. The plugin has no pricing information, so it should not trigger.",
+              "prompt": "What should a small law firm expect to pay for an answering service?"
+            },
+            {
+              "description": "Drafting an email for the user to send. The plugin doesn't send email or book service visits, so it should not trigger.",
+              "prompt": "Draft a polite email telling a customer their service visit moved to Friday."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "release_notes": "First release in ChatGPT: review your answering service messages, see your open follow-up To Dos, and see or change who's on call, with your own client portal login."
+      }
+    }
+  }
+}

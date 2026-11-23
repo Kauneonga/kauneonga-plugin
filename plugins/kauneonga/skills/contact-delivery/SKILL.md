@@ -17,7 +17,7 @@ on. Say that when you propose a change.
 2. `list_delivery_method_reference_data` for that person. It returns the valid method
    types, the fields each type needs, and the methods they already have. Check it so you
    don't create a duplicate.
-3. Say the change in plain words ("Dr. Lee will get messages by text at (555) 123-4567
+3. Say the change in plain words ("Sam Lee will get messages by text at (555) 123-4567
    instead of a phone call") and wait for a yes.
 4. Make it, then read the person's methods again with `list_delivery_methods` and confirm.
 
