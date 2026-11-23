@@ -10,6 +10,8 @@ import tempfile
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+PLUGIN = "plugins/kauneonga"
+PLUGIN_DIR = ROOT / PLUGIN
 EXPECTED_ENDPOINT = "https://mcp.kauneonga.com/api/v2/mcp"
 EXPECTED_NAME = "kauneonga"
 EXPECTED_SKILLS = {
@@ -44,7 +46,18 @@ def names_something_internal(text):
             if hashlib.sha256(phrase).hexdigest() in FORBIDDEN_SHA256:
                 return True
     return False
-PUBLIC_FILES = ["README.md", "AGENTS.md", "plugin.json", ".claude-plugin/plugin.json", ".claude-plugin/marketplace.json"]
+PUBLIC_FILES = [
+    "README.md",
+    "AGENTS.md",
+    "plugin.json",
+    f"{PLUGIN}/README.md",
+    f"{PLUGIN}/.claude-plugin/plugin.json",
+    ".claude-plugin/marketplace.json",
+]
+# The Claude directory accepts only these files in a plugin from an organization that
+# isn't Verified, and refuses a version where any file names an image it could run.
+DIRECTORY_SUFFIXES = {".md", ".json", ".png"}
+DIRECTORY_NAMES = {"LICENSE"}
 
 
 def read_json(path):
@@ -52,17 +65,18 @@ def read_json(path):
 
 
 def check_manifests():
-    claude = read_json(".claude-plugin/plugin.json")
+    claude = read_json(f"{PLUGIN}/.claude-plugin/plugin.json")
     marketplace = read_json(".claude-plugin/marketplace.json")
     portable = read_json("plugin.json")
-    cmcp = read_json(".mcp.json")
+    cmcp = read_json(f"{PLUGIN}/.mcp.json")
     pmcp = read_json("mcp.json")
 
     assert claude["name"] == portable["name"] == EXPECTED_NAME
     assert claude["version"] == portable["version"]
     listed = marketplace["plugins"]
     assert [p["name"] for p in listed] == [EXPECTED_NAME], listed
-    assert listed[0]["source"] == "./"
+    assert listed[0]["source"] == f"./{PLUGIN}"
+    assert claude["privacyPolicyUrl"] == openai_privacy(portable)
     assert listed[0]["version"] == claude["version"]
     assert portable["$schema"].endswith("plugin.schema.json")
     assert pmcp["$schema"].endswith("mcp.schema.json")
@@ -88,7 +102,11 @@ def check_manifests():
     assert listing["capabilities"] == ["Read", "Write"]
     for key in ("websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"):
         assert listing[key].startswith("https://"), key
-    check_logo(ROOT / listing["logo"])
+    check_logo(PLUGIN_DIR / listing["logo"])
+
+
+def openai_privacy(portable):
+    return portable["extensions"]["com.openai"]["interface"]["privacyPolicyURL"]
 
 
 def check_logo(path):
@@ -100,7 +118,7 @@ def check_logo(path):
 
 def check_skills():
     found = set()
-    for skill in sorted((ROOT / "skills").glob("*/SKILL.md")):
+    for skill in sorted((PLUGIN_DIR / "skills").glob("*/SKILL.md")):
         text = skill.read_text(encoding="utf-8")
         match = re.match(r"---\nname: ([a-z0-9-]+)\ndescription: (.+?)\n---\n", text, re.S)
         assert match, f"{skill} needs name and description frontmatter"
@@ -134,9 +152,25 @@ def check_chatgpt_package():
     assert not any(n.startswith(".claude-plugin/") or n == ".mcp.json" for n in names)
 
 
+def check_directory_folder():
+    """The folder submitted to the Claude directory holds only files it accepts."""
+    for path in sorted(p for p in PLUGIN_DIR.rglob("*") if p.is_file()):
+        rel = path.relative_to(PLUGIN_DIR).as_posix()
+        assert path.suffix in DIRECTORY_SUFFIXES or path.name in DIRECTORY_NAMES, rel
+        assert path.name.lower() not in {"agents.md", "claude.md", "claude.local.md"}, rel
+        if path.suffix != ".png":
+            text = path.read_text(encoding="utf-8")
+            assert not text.startswith("#!"), rel
+            for image in PLUGIN_DIR.rglob("*.png"):
+                assert image.name not in text, f"{rel} names {image.name}"
+    assert not (ROOT / ".claude-plugin" / "plugin.json").exists(), "Claude manifest lives in the plugin folder"
+    assert not (ROOT / ".mcp.json").exists(), "Claude connector config lives in the plugin folder"
+
+
 def check_license():
     text = (ROOT / "LICENSE").read_text(encoding="utf-8")
     assert "MIT License" in text and "Kauneonga LLC" in text
+    assert (PLUGIN_DIR / "LICENSE").read_text(encoding="utf-8") == text
 
 
 if __name__ == "__main__":
@@ -144,5 +178,6 @@ if __name__ == "__main__":
     check_skills()
     check_public_text()
     check_chatgpt_package()
+    check_directory_folder()
     check_license()
     print("PASS")

@@ -22,11 +22,12 @@ one logo, a packaging script and offline checks.
 |---|---|
 | `plugin.json` | Portable Agent Plugins manifest (agent-plugins.org), including the ChatGPT listing |
 | `mcp.json` | Portable connector configuration with the sign-in declaration |
-| `.claude-plugin/plugin.json` | Claude plugin manifest |
-| `.claude-plugin/marketplace.json` | Claude marketplace entry for this repository |
-| `.mcp.json` | Claude connector configuration |
-| `skills/<name>/SKILL.md` | Skills, one shared source for every agent |
-| `assets/logo.png` | Listing logo |
+| `plugins/kauneonga/` | The Claude plugin, the folder submitted to the Claude directory |
+| `plugins/kauneonga/.claude-plugin/plugin.json` | Claude plugin manifest |
+| `plugins/kauneonga/.mcp.json` | Claude connector configuration |
+| `plugins/kauneonga/skills/<name>/SKILL.md` | Skills, one shared source for every agent |
+| `plugins/kauneonga/assets/logo.png` | Listing logo |
+| `.claude-plugin/marketplace.json` | Claude marketplace entry for this repository, pointing at `plugins/kauneonga` |
 | `scripts/build_chatgpt_package.py` | Builds the ChatGPT upload ZIP into `dist/` |
 | `tests/test_package.py` | Offline structure and safety checks |
 | `docs/MAINTAINING.md` | Maintainer guide; read it before changing manifests |
@@ -38,11 +39,16 @@ Run before every commit. CI runs the first one on every push and pull request.
 ```bash
 python3 tests/test_package.py
 claude plugin validate --strict .
+claude plugin validate --strict plugins/kauneonga
 ```
 
 ## Rules
 
-- Keep one shared `skills/` tree for every agent. Don't add per-app copies of a skill.
+- Keep one shared `plugins/kauneonga/skills/` tree for every agent. Don't add per-app
+  copies of a skill.
+- `plugins/kauneonga/` is what the Claude directory scans. Put only Markdown, JSON, the
+  logo PNG and the license there: no scripts, no AGENTS.md or CLAUDE.md, and no file that
+  names the logo. `tests/test_package.py` checks this.
 - Skills are for clients of the answering service. They may name only tools the client
   connector actually serves, never tools meant for answering service staff. If you
   rename or remove a tool reference, update every skill that mentions it.
@@ -56,15 +62,15 @@ claude plugin validate --strict .
 - Clients can't delete an escalation level. Skills never offer to.
 - This plugin has no billing or payment tools. Never collect card, bank or payment
   details through an AI chat.
-- Keep the version identical in `plugin.json`, `.claude-plugin/plugin.json` and
-  `.claude-plugin/marketplace.json`, and the connector URL identical in `mcp.json` and
-  `.mcp.json`.
+- Keep the version identical in `plugin.json`, `plugins/kauneonga/.claude-plugin/plugin.json`
+  and `.claude-plugin/marketplace.json`, and the connector URL identical in `mcp.json` and
+  `plugins/kauneonga/.mcp.json`.
 - Never add credentials, API keys, `headers` blocks, reviewer logins or real client data
   to any file. Examples use made-up names such as Dr. Lee and Northwind.
 - Public text (README, manifests, skills) must not name internal systems, vendors,
   staff-only roles or other brands. `tests/test_package.py` checks the public files.
 - Write for the end user: plain language, no internal jargon, no em dashes. Prices and
   plan details come from https://www.kauneonga.com/pricing/, never from memory.
-- Don't add new skills to `skills/` without also adding them to `EXPECTED_SKILLS` in
+- Don't add new skills to `plugins/kauneonga/skills/` without also adding them to `EXPECTED_SKILLS` in
   `tests/test_package.py` and to the skills table in `README.md`.
 - Preserve the MIT copyright notice in `LICENSE`.
